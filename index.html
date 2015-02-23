@@ -12,19 +12,31 @@
   <body>
 
     <div class="container" ng-controller="RestaurantsCtrl">
+      <div class="row" ng-show="restaurants.length">
+        <div class="col-md-12">
+          <h4>Search Restaurants</h4>
+          <form class="form-inline" role="form">
+            <div class="form-group">
+              <input ng-model="query" type="text" class="form-control" placeholder="Search">
+            </div>
+          </form>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-md-12">
-          <h2>Restaurant List</h2>
+          <h2 ng-show="restaurants.length && filtered.length">Restaurant List</h2>
+          <h2 ng-show="restaurants.length && !filtered.length">No matches</h2>
           <ul>
-            <li ng-repeat="item in restaurants">
+            <li ng-repeat="item in filtered = (restaurants | filter:query)">
               <span ng-click="editing = true" ng-hide="editing">
                 {{item.name}} {{item.type}} {{item.price}} <a ng-click="deleteRestaurant(item)">delete</a>
               </span>
               <span class="form-group" ng-show="editing" ng-submit="editing = false">
                 <form class="form-inline" role="form">
                   <input type="text" class="form-control input-sm" ng-model="item.name" placeholder="Name" required/>
-                  <input type="text" class="form-control input-sm" ng-model="item.name" placeholder="Name" required/>
-                  <input type="text" class="form-control input-sm" ng-model="item.name" placeholder="Name" required/>
+                  <input type="text" class="form-control input-sm" ng-model="item.type" placeholder="Type" required/>
+                  <input type="text" class="form-control input-sm" ng-model="item.price" placeholder="Price" required/>
                   <button class="btn btn-default btn-sm" type="submit">Save</button>
                 </form>
               </span>
@@ -38,7 +50,11 @@
             <div class="form-group">
               <input type="text" ng-model="restaurantName" class="form-control" placeholder="Enter name">
               <input type="text" ng-model="restaurantType" class="form-control" placeholder="Enter type">
-              <input type="text" ng-model="restaurantPrice" class="form-control" placeholder="Enter price range">
+              <div ng-repeat="item in restaurants">
+                <select  class="form-control">
+                  <option value="{{item.price}}">{{item.price}}</option>
+                </select>
+              </div>
             </div>
 
             <button type="submit" class="btn btn-default">Submit</button>
