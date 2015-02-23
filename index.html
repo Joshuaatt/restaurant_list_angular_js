@@ -16,7 +16,19 @@
         <div class="col-md-12">
           <h2>Restaurant List</h2>
           <ul>
-            <li ng-repeat="item in restaurants">{{item.name}} {{item.type}} {{item.price}}</li> <a ng-click="deleteRestaurant(item)">delete</a>
+            <li ng-repeat="item in restaurants">
+              <span ng-click="editing = true" ng-hide="editing">
+                {{item.name}} {{item.type}} {{item.price}} <a ng-click="deleteRestaurant(item)">delete</a>
+              </span>
+              <span class="form-group" ng-show="editing" ng-submit="editing = false">
+                <form class="form-inline" role="form">
+                  <input type="text" class="form-control input-sm" ng-model="item.name" placeholder="Name" required/>
+                  <input type="text" class="form-control input-sm" ng-model="item.name" placeholder="Name" required/>
+                  <input type="text" class="form-control input-sm" ng-model="item.name" placeholder="Name" required/>
+                  <button class="btn btn-default btn-sm" type="submit">Save</button>
+                </form>
+              </span>
+            </li>
           </ul>
         </div>
 
